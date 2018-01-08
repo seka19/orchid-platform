@@ -5,7 +5,7 @@
     <div class='input-group date datetimepicker'>
         <input type='text' class="form-control {{$class or ''}}"
                id="{{$id}}"
-               value="{{$value or old($name)}}"
+               value="{{$value or old($oldName)}}"
                placeholder="{{$placeholder or ''}}"
                name="{{$fieldName}}"
                @if(isset($required) && $required) required @endif

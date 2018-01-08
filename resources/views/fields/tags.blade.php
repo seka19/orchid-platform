@@ -4,7 +4,7 @@
     @endif
     <input type="text" class="form-control tagsinput {{$class or ''}}" data-role="tagsinput" id="field-{{$slug}}"
            name="{{$fieldName}}"
-           value="{{$value or old($name)}}"
+           value="{{$value or old($oldName)}}"
            placeholder="{{$placeholder or ''}}"
            @if(isset($required) && $required) required @endif
     >

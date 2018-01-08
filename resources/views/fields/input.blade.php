@@ -4,7 +4,7 @@
     @endif
     <input type="{{$type}}" class="form-control {{$class or ''}}" id="{{$id}}"
            name="{{$fieldName}}"
-           value="{{$value or old($name)}}"
+           value="{{$value or old($oldName)}}"
            placeholder="{{$placeholder or ''}}"
            max="{{$max or ''}}"
            maxlength="{{$maxlength or ''}}"

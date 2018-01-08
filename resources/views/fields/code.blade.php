@@ -5,7 +5,7 @@
     <div id="ace-code-block-{{$id}}" style="width: 100%; min-height: 500px;"></div>
     <input type="hidden" class="form-control {{$class or ''}}" id="{{$id}}"
            name="{{$fieldName}}"
-           value="{{$value or old($name)}}"
+           value="{{$value or old($oldName)}}"
            placeholder="{{$placeholder or ''}}"
            @if(isset($required) && $required) required @endif
     >

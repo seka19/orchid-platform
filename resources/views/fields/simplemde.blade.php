@@ -11,7 +11,7 @@
            name="{{$fieldName}}"
            id="{{$id}}"
            type="hidden"
-           value="{{ $value or old($name) }}"
+           value="{{ $value or old($oldName) }}"
            @if(isset($required) && $required) required @endif
     >
 	</div>

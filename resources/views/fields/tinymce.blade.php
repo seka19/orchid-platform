@@ -5,13 +5,13 @@
     @endif
 
     <div class="tinymce-{{$id}} b wrapper" style="min-height: 500px">
-      {!! $value or old($name) !!}
+      {!! $value or old($oldName) !!}
     </div>
 
      <input id="{{$id}}" type="hidden"
             name="{{$fieldName}}"
             placeholder="{{$placeholder or ''}}"
-            value="{{ $value or old($name) }}"
+            value="{{ $value or old($oldName) }}"
             @if(isset($required) && $required) required @endif>
 
     @if(isset($help))

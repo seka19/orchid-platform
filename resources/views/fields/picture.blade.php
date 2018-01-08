@@ -5,8 +5,8 @@
 
 
     <div class="picture-container m-b-md">
-        @if(isset($value) && strlen($value) || strlen(old($name)))
-            <img src="{{$value or old($name)}}" class="img-responsive img-thumbnail" alt=""/>
+        @if(isset($value) && strlen($value) || strlen(old($oldName)))
+            <img src="{{$value or old($oldName)}}" class="img-responsive img-thumbnail" alt=""/>
         @endif
     </div>
 
@@ -21,7 +21,7 @@
            data-width="{{$width}}"
            data-height="{{$height}}"
            name="{{$fieldName}}"
-           value="{{$value or old($name)}}"
+           value="{{$value or old($oldName)}}"
            @if(isset($required) && $required) required @endif
     >
 </div>

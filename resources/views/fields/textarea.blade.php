@@ -9,7 +9,7 @@
               maxlength="{{$maxlength or ''}}"
               minlength="{{$minlength or ''}}"
               @if(isset($required) && $required) required @endif
-    >{!! $value or old($name) !!}</textarea>
+    >{!! $value or old($oldName) !!}</textarea>
     @if(isset($help))
         <p class="help-block">{{$help}}</p>
     @endif
