@@ -138,6 +138,11 @@ return [
     'many' => [//App\Core\Behaviors\Many\DemoPost::class,
     ],
 
+    /**
+     *
+     */
+    'posts_safe_delete' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Common Behaviors

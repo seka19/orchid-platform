@@ -24,6 +24,11 @@ class Post extends Model
     use SoftDeletes, TaggableTrait, Sluggable, MultiLanguage, Searchable, Attachment, JsonRelations;
 
     /**
+     *
+     */
+    const STATUS_ARCHIVE = 'archive';
+
+    /**
      * @var string
      */
     protected $table = 'posts';
@@ -323,9 +328,13 @@ class Post extends Model
      *
      * @return Builder
      */
-    public function scopeStatus(Builder $query, string $postStatus) : Builder
+    public function scopeStatus(Builder $query, string $postStatus): Builder
     {
-        return $query->where('status', $postStatus);
+        if ($postStatus === self::STATUS_ARCHIVE) {
+            return $query->onlyTrashed();
+        } else {
+            return $query->where('status', $postStatus);
+        }
     }
 
     /**
@@ -381,11 +390,12 @@ class Post extends Model
     private function filter(Builder $query, $dashboard = false) : Builder
     {
         $filters = $this->behavior->getFilters($dashboard);
-
         foreach ($filters as $filter) {
+            /**
+             * @var \Orchid\Platform\Http\Filters\SearchFilter $filter
+             */
             $query = $filter->filter($query);
         }
-
         return $query;
     }
 

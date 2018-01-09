@@ -76,7 +76,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('slug', function ($value) {
             if (is_numeric($value)) {
-                return Post::where('id', $value)->firstOrFail();
+                return Post::where('id', $value)->withTrashed()->firstOrFail();
             }
 
             return Post::findOrFail($value);

@@ -35,6 +35,7 @@
         <li>
                 <button type="submit"
                         form="post-form"
+                        title="{{trans('dashboard::post/base.action.save')}}"
                         class="btn btn-sm btn-link"><i class="sli icon-check fa-2x"></i></button>
             </li>
 

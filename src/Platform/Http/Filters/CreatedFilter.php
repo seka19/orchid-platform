@@ -4,6 +4,7 @@ namespace Orchid\Platform\Http\Filters;
 
 use Orchid\Platform\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class CreatedFilter extends Filter
 {
@@ -32,8 +33,16 @@ class CreatedFilter extends Filter
      */
     public function run(Builder $builder) : Builder
     {
-        return $builder->where('created_at', '>', $this->request->get('start_created_at'))->where('created_at', '<',
-            $this->request->get('end_created_at'));
+
+
+        $start = (new Carbon($this->request->get('start_created_at')))
+            ->toDateTimeString();
+        $end = (new Carbon($this->request->get('end_created_at')))
+            ->addDay()
+            ->toDateTimeString();
+        return $builder
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<', $end);
     }
 
     /**

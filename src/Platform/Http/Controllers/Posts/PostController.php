@@ -84,7 +84,12 @@ class PostController extends Controller
             $slug = $type->slugFields ? reset($content)[$type->slugFields] : 1;
         }
 
-        $post->slug = SlugService::createSlug(Post::class, 'slug', $slug);
+        $post->slug = SlugService::createSlug(
+            Post::class,
+            'slug',
+            $slug,
+            ['includeTrashed' => true]
+        );
 
         $post->save();
 
@@ -183,10 +188,29 @@ class PostController extends Controller
     {
         $this->checkPermission('dashboard.posts.type.'.$type->slug);
 
-        $post->delete();
+        if (config('platform.posts_safe_delete', true)) {
+            $post->delete();
+        } else {
+            $post->forceDelete();
+        }
 
         Alert::success(trans('dashboard::common.alert.success'));
 
+        return redirect()->route('dashboard.posts.type', [
+            'type' => $type->slug,
+        ]);
+    }
+
+    /**
+     * @param PostBehavior $type
+     * @param Post $post
+     * @return RedirectResponse
+     */
+    public function restore(PostBehavior $type, Post $post): RedirectResponse
+    {
+        $this->checkPermission('dashboard.posts.type.' . $type->slug);
+        $post->restore();
+        Alert::success(trans('dashboard::common.alert.success'));
         return redirect()->route('dashboard.posts.type', [
             'type' => $type->slug,
         ]);

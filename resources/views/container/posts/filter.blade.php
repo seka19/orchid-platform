@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             @foreach($filters->chunk($chunk) as $value)
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     @foreach($value as $filter)
                         {!! $filter->display() !!}
                     @endforeach

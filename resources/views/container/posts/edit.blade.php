@@ -4,8 +4,12 @@
 @section('navbar')
 
     <ul class="nav navbar-nav navbar-right v-center">
-
-            @if($locales->count() > 1)
+        @if($post->deleted_at)
+            <li>
+                <span class="label label-danger">{{trans('dashboard::post/base.status_list.archive')}}</span>
+            </li>
+        @endif
+        @if($locales->count() > 1)
             <li class="dropdown">
                 <a href="#"
                    class="dropdown-toggle text-uppercase"
@@ -34,18 +38,29 @@
         @endif
 
         <li>
-                <button type="submit"
-                        form="post-form"
-                        class="btn btn-sm btn-link"><i class="sli icon-check fa-2x"></i></button>
-            </li>
+            <button type="submit"
+                    form="post-form"
+                    title="{{trans('dashboard::post/base.action.save')}}"
+                    class="btn btn-sm btn-link"><i class="sli icon-check fa-2x"></i></button>
+        </li>
 
+        @if($post->deleted_at)
+            <li>
+                <button type="submit"
+                        form="form-post-restore"
+                        title="{{trans('dashboard::post/base.action.restore')}}"
+                        class="btn btn-sm btn-link"><i class="sli icon-action-undo fa-2x"></i></button>
+            </li>
+        @else
             <li>
                 <button type="submit"
                         form="form-post-remove"
+                        title="{{trans('dashboard::post/base.action.remove')}}"
+                        onclick="return window.confirm('{{trans('dashboard::post/base.action.remove_confirm')}}')"
                         class="btn btn-sm btn-link"><i class="sli icon-trash fa-2x"></i></button>
             </li>
-
-        </ul>
+        @endif
+    </ul>
 @stop
 @section('content')
     <div class="app-content-body app-content-full" id="post" data-post-id="{{$post->id}}">
@@ -80,13 +95,13 @@
                         <div class="nav-tabs-alt">
                             @if(count($type->render() ) > 1)
                                 <ul class="nav nav-tabs">
-                                @foreach($type->render() as $name => $view)
+                                    @foreach($type->render() as $name => $view)
                                         <li @if ($loop->first) class="active" @endif>
-                                        <a data-target="#module-{{str_slug($name)}}" role="tab" data-toggle="tab"
-                                           aria-expanded="true">{{$name}}</a>
-                                    </li>
+                                            <a data-target="#module-{{str_slug($name)}}" role="tab" data-toggle="tab"
+                                               aria-expanded="true">{{$name}}</a>
+                                        </li>
                                     @endforeach
-                            </ul>
+                                </ul>
                             @endif
                         </div>
                         <div class="row-row">
@@ -107,12 +122,21 @@
             {{ method_field('PUT') }}
         </form>
         <!-- /hbox layout  -->
-        <form id="form-post-remove" action="{{route('dashboard.posts.type.destroy',[
-        'type' => $type->slug,
-        'slug' => $post->id,
-        ])}}" method="POST">
+        <form
+                id="form-post-remove"
+                action="{{route('dashboard.posts.type.destroy', ['type' => $type->slug, 'slug' => $post->id])}}"
+                method="POST"
+        >
             {{ csrf_field() }}
             {{ method_field('delete') }}
+        </form>
+        <form
+                id="form-post-restore"
+                action="{{route('dashboard.posts.type.restore', ['type' => $type->slug, 'slug' => $post->id])}}"
+                method="POST"
+        >
+            {{ csrf_field() }}
+            {{ method_field('put') }}
         </form>
     </div>
 @stop

@@ -44,6 +44,11 @@ $this->domain(config('platform.domain'))->group(function () {
             'as'   => 'dashboard.posts.type.destroy',
             'uses' => 'PostController@destroy',
         ]);
+
+        $router->put('{type}/{slug?}/restore', [
+            'as'   => 'dashboard.posts.type.restore',
+            'uses' => 'PostController@restore',
+        ]);
     });
 
     /*

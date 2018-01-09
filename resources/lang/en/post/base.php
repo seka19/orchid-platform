@@ -23,6 +23,12 @@ return [
     'status_list'              => [
         'publish' => 'Published',
         'draft'   => 'Draft',
+        'archive' => 'Archive'
     ],
-
+    'action'                   => [
+        'save'           => 'Save',
+        'remove'         => 'Remove',
+        'remove_confirm' => 'Are you sure you want to delete the post?',
+        'restore'        => 'Restore from archive'
+    ]
 ];
