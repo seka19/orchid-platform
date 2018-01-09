@@ -2,7 +2,7 @@
     <div class="form-group">
         <label>{{trans('dashboard::post/base.semantic_url')}}</label>
         <input type='text' class="form-control"
-               value="{{$post->slug or ''}}"
+               value="{{$post->slug or old('slug')}}"
                placeholder="{{trans('dashboard::post/base.semantic_url_unique_name')}}" name="slug">
     </div>
     <div class="line line-dashed b-b line-lg"></div>
@@ -10,7 +10,7 @@
         <label>{{trans('dashboard::post/base.time_of_publication')}}</label>
         <div class='input-group date datetimepicker'>
             <input type='text' class="form-control"
-                   value="{{$post->publish_at or ''}}"
+                   value="{{$post->publish_at or old('slug')}}"
                    name="publish"
                    data-date-format="YYYY-MM-DD HH:mm:ss"
             >
