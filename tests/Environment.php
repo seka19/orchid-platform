@@ -7,9 +7,12 @@ use Orchid\Platform\Facades\Alert;
 use Illuminate\Support\Facades\Schema;
 use Orchid\Platform\Facades\Dashboard;
 use Orchid\Platform\Providers\FoundationServiceProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 trait Environment
 {
+    use RefreshDatabase;
+
     /**
      * Setup the test environment.
      */
@@ -17,14 +20,8 @@ trait Environment
     {
         parent::setUp();
 
+        $this->refreshTestDatabase();
         Schema::defaultStringLength(191);
-
-        $this->loadLaravelMigrations('orchid');
-
-        $this->artisan('migrate', [
-           '--database' => 'orchid',
-       ]);
-        $this->withFactories(__DIR__.'/../database/factories');
     }
 
     /**
@@ -34,11 +31,11 @@ trait Environment
     {
         // set up database configuration
         $app['config']->set('database.connections.orchid', [
-            'driver'   => 'pgsql',
-            'host'     => '127.0.0.1',
-            'port'     => '5432',
-            'database' => 'platform',
-            'username' => 'orchid',
+            'driver'   => 'mysql',
+            'host'     => 'localhost',
+            'port'     => '3306',
+            'database' => 'orchid',
+            'username' => 'root',
             'password' => 'orchid',
             'charset'  => 'utf8',
             'prefix'   => '',
